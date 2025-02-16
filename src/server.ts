@@ -9,9 +9,10 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
-const allowedOrigins = [process.env.CLIENT_URL].filter(
-  (origin): origin is string => origin !== undefined
-);
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "https://demo-frontend-seven-psi.vercel.app",
+].filter((origin): origin is string => origin !== undefined);
 
 const corsOptions = {
   origin: allowedOrigins,
