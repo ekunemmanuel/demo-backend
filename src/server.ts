@@ -34,6 +34,8 @@ app.post("/auth", (req, res) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "none",
+      expires: new Date(Date.now() + 60 * 60 * 1000),
+      maxAge: 60 * 60 * 1000,
     });
     res.status(200).send({ message: authResult.message });
   } else {
