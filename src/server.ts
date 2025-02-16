@@ -9,10 +9,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
-const allowedOrigins = [
-  process.env.CLIENT_URL,
-  "https://demo-frontend-seven-psi.vercel.app",
-].filter((origin): origin is string => origin !== undefined);
+const allowedOrigins = [process.env.CLIENT_URL].filter(
+  (origin): origin is string => origin !== undefined
+);
 
 const corsOptions = {
   origin: allowedOrigins,
@@ -31,7 +30,11 @@ app.post("/auth", (req, res) => {
   const { username, password } = req.body;
   const authResult = authenticateUser(username, password);
   if (authResult.success) {
-    res.cookie("tokens", authResult.token);
+    res.cookie("tokens", authResult.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+    });
     res.status(200).send({ message: authResult.message });
   } else {
     res.status(401).send({ message: authResult.message });
@@ -39,7 +42,11 @@ app.post("/auth", (req, res) => {
 });
 
 app.post("/logout", (req, res) => {
-  res.clearCookie("tokens");
+  res.clearCookie("tokens", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "none",
+  });
   res.status(200).send({ message: "Logout successful" });
 });
 
