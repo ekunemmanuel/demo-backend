@@ -55,6 +55,7 @@ app.post("/logout", (req, res) => {
 });
 
 app.get("/protected", verifyToken, (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
   res.send("This is a protected route");
 });
 
