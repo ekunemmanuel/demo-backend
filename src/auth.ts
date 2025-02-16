@@ -8,7 +8,7 @@ export const authenticateUser = (username: string, password: string) => {
   if (username === "admin" && password === "password") {
     const token = jwt.sign({ username }, secretKey, { expiresIn: "1h" });
     console.log(token);
-    
+
     return { success: true, message: "Authentication successful", token };
   } else {
     return { success: false, message: "Authentication failed" };
@@ -21,9 +21,9 @@ export function verifyToken(
   next: NextFunction
 ): void {
   const token = req.cookies.tokens;
-  console.log(req.cookies);
-  console.log(req.headers.cookie);
-  
+  console.log("cookies", req.cookies);
+  console.log("headers cookies", req.headers.cookie);
+
   if (!token) {
     res.status(401).send({ message: "No token provided" });
   } else {
