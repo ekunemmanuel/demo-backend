@@ -21,7 +21,8 @@ export function verifyToken(
   next: NextFunction
 ): void {
   const token = req.cookies.tokens;
-  console.log(req.headers);
+  console.log(req.cookies);
+  console.log(req.headers.cookie);
   
   if (!token) {
     res.status(401).send({ message: "No token provided" });

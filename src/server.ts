@@ -32,7 +32,8 @@ app.post("/auth", (req, res) => {
   if (authResult.success) {
     res.cookie("tokens", authResult.token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: true,
+      //   secure: process.env.NODE_ENV === "production",
       sameSite: "none",
       expires: new Date(Date.now() + 60 * 60 * 1000),
       maxAge: 60 * 60 * 1000,
@@ -46,7 +47,8 @@ app.post("/auth", (req, res) => {
 app.post("/logout", (req, res) => {
   res.clearCookie("tokens", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    // secure: process.env.NODE_ENV === "production",
+    secure: true,
     sameSite: "none",
   });
   res.status(200).send({ message: "Logout successful" });
